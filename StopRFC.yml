@@ -1,0 +1,447 @@
+---
+- name: RFC2544 Stop
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    router_user: router
+    router_pass: fos
+
+  tasks:
+
+    - name: KLBP0009 POI NGABANG
+      expect:
+        command: telnet 100.100.2.25
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 1 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+
+
+    - name: KLBP0001 POI BENGKAYANG
+      expect:
+        command: telnet 100.100.2.29
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 2 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+
+
+    - name: KLBP0007 POI PBUN SUKAMARA
+      expect:
+        command: telnet 100.100.2.9
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 3 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+
+    - name: KLBP0006 POI KETAPANG
+      expect:
+        command: telnet 100.100.2.13
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 4 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+
+
+    - name: KLBP0010 POI NANGAPINOH
+      expect:
+        command: telnet 100.100.2.17
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 5 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+      
+    - name: KLBP0011 POI SINTANG
+      expect:
+        command: telnet 100.100.2.21
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 6 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+
+    - name: KLBP0010A POI NANGAPINOH-A
+      expect:
+        command: telnet 100.100.2.37
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 7 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+
+    - name: KLBP0011A POI SINTANG-A
+      expect:
+        command: telnet 100.100.2.33
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 8 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+
+    - name: KLTP0001 POI PEMBUANG
+      expect:
+        command: telnet 100.100.2.45
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 9 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+
+    - name: KLBP0012 POI PUTUSSIBAU
+      expect:
+        command: telnet 100.100.2.41
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 10 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+      
+    - name: NTTP0004 PTT Kupang (Link Sabu)
+      expect:
+        command: telnet 100.100.4.21
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 1 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+
+
+    - name: NTTP0002 PTT Kupang (Link Ndao Nuse)
+      expect:
+        command: telnet 100.100.4.13
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 2 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false    
+      
+      
+    - name: NTTP0005 PTT Kupang (Link Waingapu)
+      expect:
+        command: telnet 100.100.4.25
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 3 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false   
+      
+
+    - name: NTTP0001 POI ALOR
+      expect:
+        command: telnet 100.100.4.9
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 4 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+ 
+    - name: NTBP0002 POI SUMBAWA BESAR
+      expect:
+        command: telnet 100.100.4.45
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 5 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false    
+      
+
+    - name: NTTP0010 POI REO
+      expect:
+        command: telnet 100.100.4.37
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 6 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false 
+      
+      
+    - name: NTTP0006 POI RUTENG
+      expect:
+        command: telnet 100.100.4.53
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 7 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false       
+      
+
+    - name: NTTP0007 POI ENDE
+      expect:
+        command: telnet 100.100.4.33
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 8 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false 
+      
+
+    - name: NTTP0013 POI WAIKABUBAK
+      expect:
+        command: telnet 100.100.4.41
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 9 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false  
+      
+      
+    - name: NTTP0003 POI KUPANG
+      expect:
+        command: telnet 100.100.4.17
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 10 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false 
+      
+
+    - name: KEPP0002
+      expect:
+        command: telnet 100.100.6.9
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 1 stop
+            rfc sender 2 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false 
+      
+
+    - name: RIAP0001 POI KUNDUR
+      expect:
+        command: telnet 100.100.6.17
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 3 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+      
+
+    - name: SMUP0001 POI BAWOMATALUO
+      expect:
+        command: telnet 100.100.6.13
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 4 stop
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false

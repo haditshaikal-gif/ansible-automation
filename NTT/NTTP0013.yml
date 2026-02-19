@@ -1,0 +1,90 @@
+---
+- name: Toggle RFC loop-interval via telnet
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    router_ip: 100.100.4.41
+    router_user: router
+    router_pass: fos
+    interval_a: 10
+    interval_b: 11
+
+  tasks:
+
+    - name: Show current RFC loop-interval
+      expect:
+        command: telnet {{ router_ip }}
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 9 stop
+            rfc sender 9
+            show this | i loop-int
+            exit
+            exit
+            commit
+            exit
+            exit
+      register: show_output
+      failed_when: false
+
+    - name: Sanitize stdout
+      set_fact:
+        safe_stdout: >-
+          {{
+            show_output.stdout
+            | string
+            | regex_replace('[^\x09\x0A\x0D\x20-\x7E]', '')
+            | replace('\r', '\n')
+          }}
+
+    - name: Split stdout into lines
+      set_fact:
+        safe_lines: "{{ safe_stdout.split('\n') }}"
+
+    - name: Extract loop-interval safely
+      set_fact:
+        current_interval: >-
+          {{
+            safe_lines
+            | select('search', '^\s*loop-interval\s+\d+')
+            | map('regex_replace', '^\s*loop-interval\s+(\d+).*', '\1')
+            | list
+            | first
+            | default('NOT_FOUND', true)
+          }}
+
+    - name: Decide new loop-interval
+      set_fact:
+        new_interval: >-
+          {{
+            interval_b
+            if (current_interval | int) == (interval_a | int)
+            else interval_a
+          }}
+
+    - name: Apply new RFC loop-interval
+      expect:
+        command: telnet {{ router_ip }}
+        timeout: 30
+        responses:
+          "Username:": "{{ router_user }}\n"
+          "Password:": "{{ router_pass }}\n"
+          "#\\s*$": |
+            config terminal
+            rfc enable
+            rfc sender 9
+            loop-interval {{ new_interval }}
+            commit
+            exit
+            rfc sender 9 start
+            exit
+            exit
+            exit
+      register: apply_output
+      failed_when: false
